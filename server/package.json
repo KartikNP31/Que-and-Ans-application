@@ -1,0 +1,21 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run"
+  },
+  "author": "patelkn1303@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "mongodb": "^6.11.0",
+    "mongoose": "^8.8.2",
+    "nodemon": "^3.1.7"
+  },
+  "devDependencies": {},
+  "description": ""
+}
