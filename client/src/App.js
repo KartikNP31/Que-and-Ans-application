@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route, BrowserRouter, Navigate } from 'react-router-dom';
+import { Routes, Route, BrowserRouter, Navigate, replace } from 'react-router-dom';
 
 import Authentication from "./components/Authentication";
 import WelcomePage from "./components/WelcomePage";
@@ -17,12 +17,12 @@ function App() {
 
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={< LandingPage />} >
+          <Route path="/" element={< LandingPage />} replace>
             <Route path='/' element={<Navigate to="/WelcomePage"/> } />
             <Route path='/WelcomePage' element={<WelcomePage />} />
             <Route path='/Authentication' element={<Authentication />} />
-            <Route path="/Dashboard" element={< Dashboard />} >
-              <Route path='/Dashboard' element={<Navigate to="/Dashboard/Home"/> } />
+            <Route path="/Dashboard" element={< Dashboard />} replace>
+              <Route path='/Dashboard' element={<Navigate to="/Dashboard/Home"/>} />
               <Route path='/Dashboard/Home' element={<Home />} />
               <Route path='/Dashboard/ApprovedPost' element={<ApprovedPost />} />
               <Route path='/Dashboard/PendingPost' element={<PendingPost />} />
