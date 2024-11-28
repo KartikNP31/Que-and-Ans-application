@@ -3,11 +3,26 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { ClerkProvider } from '@clerk/clerk-react';
+import { dark, neobrutalism, shadesOfPurple } from '@clerk/themes';
+
+const PUBLISHABLE_KEY = process.env.REACT_APP_CLERK_PUBLISHABLE_KEY;
+console.log("🚀 ~ PUBLISHABLE_KEY:", PUBLISHABLE_KEY)
+
+if (!PUBLISHABLE_KEY) {
+  console.error("Environment Variables:", process.env); // Debugging log
+  throw new Error("Missing Publishable Key. Ensure REACT_APP_CLERK_PUBLISHABLE_KEY is set in your .env.local file.");
+}
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <ClerkProvider appearance={{
+      baseTheme: dark,
+      variables: { colorPrimary: "#2DD4BF" },
+    }} publishableKey={PUBLISHABLE_KEY} afterSignOutUrl="/">
+      <App />
+    </ClerkProvider>
   </React.StrictMode>
 );
 

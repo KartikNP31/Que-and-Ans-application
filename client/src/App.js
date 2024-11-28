@@ -1,23 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Routes, Route, BrowserRouter, Navigate } from 'react-router-dom';
+
+import Authentication from "./components/Authentication";
+import WelcomePage from "./components/WelcomePage";
+import LandingPage from "./components/LandingPage";
+import { Dashboard } from "./components/Dashboard";
+import Home from "./components/Home";
+import ApprovedPost from "./components/ApprovedPost";
+import PendingPost from "./components/PendingPost";
+import NewPost from "./components/NewPost";
+import SearchPost from "./components/SearchPost";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="h-screen w-full block">
+
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={< LandingPage />} >
+            <Route path='/' element={<Navigate to="/WelcomePage"/> } />
+            <Route path='/WelcomePage' element={<WelcomePage />} />
+            <Route path='/Authentication' element={<Authentication />} />
+            <Route path="/Dashboard" element={< Dashboard />} >
+              <Route path='/Dashboard' element={<Navigate to="/Dashboard/Home"/> } />
+              <Route path='/Dashboard/Home' element={<Home />} />
+              <Route path='/Dashboard/ApprovedPost' element={<ApprovedPost />} />
+              <Route path='/Dashboard/PendingPost' element={<PendingPost />} />
+              <Route path='/Dashboard/NewPost' element={<NewPost />} />
+              <Route path='/Dashboard/SearchPost' element={<SearchPost />} />
+            </Route>
+          </Route>
+          <Route path='*' element={<Navigate to="/"/>}/>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
