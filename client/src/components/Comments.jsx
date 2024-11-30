@@ -1,18 +1,36 @@
 import React, { useEffect, useState } from "react";
 import CommentServices from "../services/CommentServices";
+import { useUsername } from "../UsernameContextProvider";
 
-const Comments = ({ postId, username }) => {
+const Comments = ({ postId}) => {
   const [newComment, setNewComment] = useState("");
   const [comments, setComments] = useState([]);
+  const {username} = useUsername();
 
   const handleCommentChange = (e) => {
     setNewComment(e.target.value);
   };
 
-  const handleAddComment = () => {
-    if (newComment.trim()) {
-      // onAddComment(newComment);
-      setNewComment(""); // Reset comment input
+  const handleAddComment = async() => {
+    // if (newComment.trim()) {
+    //   // onAddComment(newComment);
+    //   setNewComment(""); // Reset comment input
+    // }
+    try{
+      const data = {
+        content: newComment,
+        postId: postId,
+        username: username
+      }
+      const response = await CommentServices.addComment(data);
+      console.log("🚀 ~ handleAddComment ~ response:", response.data)
+      if(response.error){
+        console.log(response.msg);
+      }
+      setNewComment("");
+      setComments([...comments, response.data]);
+    }catch(error){
+      console.error(error);
     }
   };
 
@@ -20,10 +38,10 @@ const Comments = ({ postId, username }) => {
     try {
       
       const query = {
-        postid: postId,
+        postId: postId,
       };
       const response = await CommentServices.getComments(query);
-      // console.log("🚀 ~ handleGetPosts ~ response:", response)
+      console.log("🚀 ~ handleGetPosts ~ response:", response.data)
       if(response.error){
         console.log(response.msg);
       }
@@ -58,7 +76,7 @@ const Comments = ({ postId, username }) => {
 
       {/* Existing Comments */}
       <div className="mt-4">
-        {comments.map((comment, index) => (
+        {comments && comments.map((comment, index) => (
           <div key={index} className="flex items-start space-x-2 mb-2">
             <div className="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold">
               {comment.username[0].toUpperCase()}

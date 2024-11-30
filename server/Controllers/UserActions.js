@@ -27,7 +27,7 @@ class UserActions {
 
   async getPost(req) {
     try {
-      console.log("🚀 ~ UserActions ~ getPost ~ req:", req.query)
+      // console.log("🚀 ~ UserActions ~ getPost ~ req:", req.query)
       const { username, approved, content, tags } = req.query;
       const filter = {};
       if (username) filter.username = username;
@@ -77,11 +77,12 @@ class UserActions {
 
   async getComments(req) {
     try {
-      const { username, postId } = req.query;
+      const { postId } = req.query;
       const filter = {};
-      if (username) filter.username = username;
+      // if (username) filter.username = username;
       if (postId) filter.postId = postId;
       const comments = await Comment.find(filter);
+      console.log("🚀 ~ UserActions ~ getComments ~ comments:", comments)
 
       if (comments.length === 0) {
         return { error: true, msg: "No comments found matching the criteria.", status: 404 };

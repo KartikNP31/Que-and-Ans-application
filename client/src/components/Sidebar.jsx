@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoAddCircleOutline, IoCheckboxOutline, IoHomeOutline, IoHourglassOutline, IoSearch } from "react-icons/io5";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useLocation } from "react-router-dom";
 
-const style = "className='w-7 h-7'";
 const MenuItems = [
   {name : "Home", element : <IoHomeOutline className="w-7 h-7" id="1"/>, link : "/Dashboard/Home", active : true, id : "1"},
   {name : "New Post", element : <IoAddCircleOutline className="w-7 h-7" id="2"/>, link : "/Dashboard/NewPost", active : false, id : "2"},
@@ -14,6 +13,7 @@ const MenuItems = [
 
 const Sidebar = () => {
   const [menu, setMenu] = useState(MenuItems);
+  const location = useLocation()
   
   const handleClick = (e) => {  
     const id = e.target.id;
@@ -29,6 +29,19 @@ const Sidebar = () => {
     setMenu(newMenu);
     console.log("🚀 ~ Sidebar ~ menu:", menu)
   }
+
+
+ useEffect(() => {
+    const newMenu = menu.map((item) => {
+      if(item.link === location.pathname){
+        item.active = true;
+      } else {
+        item.active = false;
+      }
+      return item
+    });
+    setMenu(newMenu);
+  }, [location]);
 
   return (
     <div className="mt-0 w-[110px] h-full py-2 px-1 flex flex-col items-center ">

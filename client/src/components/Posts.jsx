@@ -26,7 +26,7 @@ const Posts = ({approved, username}) => {
 
   useEffect(() => {
     handleGetPosts();
-  }, []);
+  }, [username]);
 
   return (
     <div className="container mx-auto p-6">

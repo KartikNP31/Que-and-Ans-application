@@ -6,9 +6,8 @@ import { FaRegComment } from "react-icons/fa";
 import Comments from "./Comments";
 
 const PostCard = ({ post }) => {
-  const { content, tags, username, createdAt } = post;
+
   
-  // State for managing comment section visibility
   const [isCommentOpen, setIsCommentOpen] = useState(false);
 
   const handleLike = () => {
@@ -27,32 +26,23 @@ const PostCard = ({ post }) => {
     console.log("Deleting the post!");
   };
 
-  // const handleAddComment = (newComment) => {
-  //   const newCommentData = {
-  //     username,
-  //     content: newComment,
-  //     createdAt: new Date(),
-  //   };
-  //   setComments([...comments, newCommentData]); // Add new comment to state
-  // };
+
 
   return (
     <div className="flex flex-col items-start p-4 mb-4 bg-white shadow-md rounded-lg">
-      {/* Left Section: User Info */}
       <div className="flex-shrink-0 mr-4">
         <div className="w-12 h-12 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold text-xl">
-          {username[0].toUpperCase()}
+          {post.username[0].toUpperCase()}
         </div>
       </div>
 
-      {/* Right Section: Post Content */}
       <div className="flex-grow w-full">
         {/* content */}
-        <h2 className="text-lg font-bold text-gray-800">{content}</h2>
+        <h2 className="text-lg font-bold text-gray-800">{post.content}</h2>
 
         {/* Tags */}
         <div className="mt-2">
-          {tags.map((tag, index) => (
+          {post.tags.map((tag, index) => (
             <span
               key={index}
               className="inline-block bg-gray-200 text-gray-800 text-sm font-medium px-2 py-1 rounded mr-2"
@@ -64,12 +54,11 @@ const PostCard = ({ post }) => {
 
         {/* Footer: Username and Date */}
         <div className="mt-3 text-sm text-gray-500">
-          Posted by <span className="font-semibold">{username}</span> on{" "}
-          {new Date(createdAt).toLocaleDateString()}
+          Posted by <span className="font-semibold">{post.username}</span> on{" "}
+          {new Date(post.createdAt).toLocaleDateString()}
         </div>
       </div>
 
-      {/* Action Icons */}
       <div className="flex items-center space-x-4 mt-4">
         <button
           onClick={handleLike}
@@ -101,12 +90,9 @@ const PostCard = ({ post }) => {
         </button>
       </div>
 
-      {/* Conditionally render CommentSection */}
       {isCommentOpen && (
         <Comments
           postId={post._id}
-          username={post.username}
-          // onAddComment={handleAddComment}
         />
       )}
     </div>
