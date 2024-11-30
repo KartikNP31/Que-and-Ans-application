@@ -1,15 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { FaRegFileImage, FaRegFilePdf } from "react-icons/fa";
-import {
-  MdOutlineDriveFileRenameOutline,
-  MdOutlineFileDownload,
-} from "react-icons/md";
+import { MdOutlineDriveFileRenameOutline } from "react-icons/md";
 import { TbTrash } from "react-icons/tb";
-import { Link } from "react-router-dom";
-import { LuLink } from "react-icons/lu";
 
-const FileComponent = ({ styleBorder }) => {
+const TagsComponent = ({ post }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
   const [isFileRename, setFileRename] = useState(false);
@@ -53,20 +47,18 @@ const FileComponent = ({ styleBorder }) => {
   }, []);
 
   return (
-    <div
-      className={`flex flex-col bg-white px-4 rounded-lg shadow-sm ${styleBorder}`}
-      draggable
-    >
-      <div className=" flex items-center justify-between py-2 border-b border-gray-200">
+    <div className="flex flex-col bg-white px-4 rounded-lg mt-2">
+      <div className=" flex items-center justify-between pt-2 ">
         <div className="flex items-center space-x-3">
-          <div className="flex items-center justify-center w-8 h-8 bg-red-100 rounded-md">
-            <FaRegFilePdf color="red" />
-          </div>
-
-          <div>
-            <div className="text-sm font-medium text-gray-900">title</div>
-
-            <p className="text-xs text-gray-500">type</p>
+          <div className="text-sm font-medium text-gray-900">
+            {post.tags.map((tag, index) => (
+              <span
+                key={index}
+                className="inline-block bg-gray-300 text-white text-sm font-medium px-2 py-0 rounded-sm mr-1 mb-1"
+              >
+                {tag}
+              </span>
+            ))}
           </div>
         </div>
         <div
@@ -81,7 +73,7 @@ const FileComponent = ({ styleBorder }) => {
             <div className="absolute z-10 right-0 mt-2 w-[15vw] bg-white border border-gray-200 rounded-md shadow-lg">
               <div className="py-1">
                 <div
-                  onClick={handleLinkEdit}
+                  // onClick={handleLinkEdit}
                   className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
                 >
                   <div className="flex flex-row items-center justify-start">
@@ -91,7 +83,7 @@ const FileComponent = ({ styleBorder }) => {
                 </div>
 
                 <div
-                  onClick={handleFileDelete}
+                  // onClick={handleFileDelete}
                   className="block px-4 py-2 text-gray-700 hover:bg-gray-100 border-t border-gray-200"
                 >
                   <div className="flex flex-row items-center text-red-500 justify-start">
@@ -108,4 +100,4 @@ const FileComponent = ({ styleBorder }) => {
   );
 };
 
-export default FileComponent;
+export default TagsComponent;

@@ -1,10 +1,10 @@
 import React from 'react'
-import ModuleComponent from './ModuleComponent'
+// import ModuleComponent from './ModuleComponent'
 
 const SearchPost = () => {
   return (
     <div>
-      <ModuleComponent />
+      {/* <ModuleComponent /> */}
     </div>
   )
 }

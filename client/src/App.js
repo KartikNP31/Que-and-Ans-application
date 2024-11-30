@@ -31,7 +31,7 @@ function App() {
   
 
   return (
-    <div className="h-screen w-full block ">
+    <div className="max-h-[700px] w-full block ">
 
       <BrowserRouter>
         <Routes>

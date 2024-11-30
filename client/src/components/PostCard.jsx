@@ -1,99 +1,71 @@
-// PostCard.js
-
-import React, { useState } from "react";
-import { AiOutlineLike, AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
-import { FaRegComment } from "react-icons/fa";
+import React, { useEffect, useRef, useState } from "react";
 import Comments from "./Comments";
+import { BiLike, BiSolidLike } from "react-icons/bi";
+import TagsComponent from "./TagsComponent";
 
 const PostCard = ({ post }) => {
+  console.log("🚀 ~ PostCard ~ post:", post)
+  const [isOpen, setIsOpen] = useState(false);
+  const [isModuleOpen, setIsModuleOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
-  
-  const [isCommentOpen, setIsCommentOpen] = useState(false);
-
-  const handleLike = () => {
-    console.log("Liked the post!");
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
   };
 
-  const handleComment = () => {
-    setIsCommentOpen(!isCommentOpen); // Toggle comment section visibility
+  const toggleModuleDropDown = () => {
+    setIsModuleOpen(!isModuleOpen);
   };
 
-  const handleEdit = () => {
-    console.log("Editing the post!");
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setIsOpen(false);
+    }
   };
 
-  const handleDelete = () => {
-    console.log("Deleting the post!");
-  };
-
-
-
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
   return (
-    <div className="flex flex-col items-start p-4 mb-4 bg-white shadow-md rounded-lg">
-      <div className="flex-shrink-0 mr-4">
-        <div className="w-12 h-12 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold text-xl">
-          {post.username[0].toUpperCase()}
+    <div className="flex flex-col my-5 bg-white mt-5 px-4 rounded-lg shadow-sm border border-gray-200">
+      <div className="flex items-center justify-between py-2 ">
+        <div
+          className="flex items-center space-x-3 w-full"
+          onClick={toggleModuleDropDown}
+        >
+          <div className="w-10 h-10 bg-green-400 text-white rounded-full  flex items-center justify-center font-bold text-xl">
+            {post.username[0].toUpperCase()}
+          </div>
+          <div>
+            <p className="text font-semibold text-gray-900">
+              {post.content.endsWith("?") ? post.content : post.content + " ?"}
+            </p>
+            <p className="text-xs text-gray-500">
+              <p className="font-sm text-gray-500">
+                by- <span className="text-gray-800">{post.username}</span> on{" "}
+                {new Date(post.createdAt).toLocaleDateString()}
+              </p>
+            </p>
+          </div>
+        </div>
+        <div
+          className="relative w-[3vw] hover:cursor-pointer justify-center"
+          ref={dropdownRef}
+          onClick={toggleDropdown}
+        >
+          <BiLike className="text-green-500 w-6 h-6" />
+          <BiSolidLike className="text-green-500 w-6 h-6" />
         </div>
       </div>
 
-      <div className="flex-grow w-full">
-        {/* content */}
-        <h2 className="text-lg font-bold text-gray-800">{post.content}</h2>
-
-        {/* Tags */}
-        <div className="mt-2">
-          {post.tags.map((tag, index) => (
-            <span
-              key={index}
-              className="inline-block bg-gray-200 text-gray-800 text-sm font-medium px-2 py-1 rounded mr-2"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-
-        {/* Footer: Username and Date */}
-        <div className="mt-3 text-sm text-gray-500">
-          Posted by <span className="font-semibold">{post.username}</span> on{" "}
-          {new Date(post.createdAt).toLocaleDateString()}
-        </div>
-      </div>
-
-      <div className="flex items-center space-x-4 mt-4">
-        <button
-          onClick={handleLike}
-          className="text-gray-500 hover:text-blue-500"
-          title="Like"
-        >
-          <AiOutlineLike size={24} />
-        </button>
-        <button
-          onClick={handleComment}
-          className="text-gray-500 hover:text-green-500"
-          title="Comment"
-        >
-          <FaRegComment size={24} />
-        </button>
-        <button
-          onClick={handleEdit}
-          className="text-gray-500 hover:text-yellow-500"
-          title="Edit"
-        >
-          <AiOutlineEdit size={24} />
-        </button>
-        <button
-          onClick={handleDelete}
-          className="text-gray-500 hover:text-red-500"
-          title="Delete"
-        >
-          <AiOutlineDelete size={24} />
-        </button>
-      </div>
-
-      {isCommentOpen && (
-        <Comments
-          postId={post._id}
-        />
+      {isModuleOpen && (
+        <>
+          <TagsComponent post={post} />
+          <Comments postId={post._id} />
+        </>
       )}
     </div>
   );
