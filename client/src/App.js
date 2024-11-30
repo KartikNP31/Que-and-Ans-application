@@ -15,14 +15,19 @@ import { useUsername } from "./UsernameContextProvider";
 
 function App() {
 
-  const { user } = useUser();
+  const { user } = useUser();  
   const {setUsername} = useUsername();
+  const {setUserRole} = useUsername();
 
   useEffect(() => {
     if (user) {
+      // console.log("🚀 ~ useEffect ~ user:", user)
       setUsername(user.username);
+      if(user.organizationMemberships.length > 0){
+        setUserRole("admin");
+      }
     }
-  }, [user, setUsername]);
+  }, [user, setUsername, setUserRole]);
   
 
   return (
@@ -49,5 +54,6 @@ function App() {
     </div>
   );
 }
+
 
 export default App;

@@ -45,6 +45,22 @@ class PostServices {
       console.log(err);
     }
   }
+
+  async updatePost(reqData) {
+    try {
+      const response = await fetch(`${host}/api/user/updatePost`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(reqData),
+      })
+      const res = await response.json();
+      return res;
+    } catch (err) {
+      console.log(err);
+    }
+  }
 }
 
 module.exports = new PostServices();

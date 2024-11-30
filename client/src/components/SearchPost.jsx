@@ -1,8 +1,11 @@
 import React from 'react'
+import ModuleComponent from './ModuleComponent'
 
 const SearchPost = () => {
   return (
-    <div>SearchPost</div>
+    <div>
+      <ModuleComponent />
+    </div>
   )
 }
 
