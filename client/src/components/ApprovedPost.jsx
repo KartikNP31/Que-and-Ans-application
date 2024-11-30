@@ -1,10 +1,7 @@
 import React from 'react'
 import Posts from './Posts';
-import { useUser } from "@clerk/clerk-react";
 
-const ApprovedPosts = () => {
-  const { user } = useUser();
-  const username = user ? user.username : "UnknownUser";
+const ApprovedPosts = ({username}) => {
 
   return (
     <div>

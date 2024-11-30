@@ -11,9 +11,7 @@ const Posts = ({approved, username}) => {
     try {
       const query = {
         approved: approved,
-      }
-      if(username!=="UnknownUser"){
-        query.username = username;
+        username: username,
       }
       const response = await PostServices.getPosts(query);
       // console.log("🚀 ~ handleGetPosts ~ response:", response)

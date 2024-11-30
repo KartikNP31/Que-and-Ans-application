@@ -1,10 +1,7 @@
 import React from 'react'
 import Posts from './Posts';
-import { useUser } from "@clerk/clerk-react";
-
-const PendingPosts = () => {
-  const { user } = useUser();
-  const username = user ? user.username : "UnknownUser";
+const PendingPosts = ({username}) => {
+  
 
   return (
     <div className='max-h-[610px] overflow-y-auto custom-scrollbar'>

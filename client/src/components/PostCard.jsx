@@ -6,7 +6,7 @@ import { FaRegComment } from "react-icons/fa";
 import Comments from "./Comments";
 
 const PostCard = ({ post }) => {
-  const { question, tags, username, createdAt } = post;
+  const { content, tags, username, createdAt } = post;
   
   // State for managing comment section visibility
   const [isCommentOpen, setIsCommentOpen] = useState(false);
@@ -47,8 +47,8 @@ const PostCard = ({ post }) => {
 
       {/* Right Section: Post Content */}
       <div className="flex-grow w-full">
-        {/* Question */}
-        <h2 className="text-lg font-bold text-gray-800">{question}</h2>
+        {/* content */}
+        <h2 className="text-lg font-bold text-gray-800">{content}</h2>
 
         {/* Tags */}
         <div className="mt-2">

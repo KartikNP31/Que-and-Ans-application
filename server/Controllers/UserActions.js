@@ -17,18 +17,18 @@ class UserActions {
       if (!question) {
         return { error: true, msg: 'Internal Server Error' };
       }
-      return { error: false, msg: 'question Submitted Successfully', data: question};
+      return { error: false, msg: 'question Submitted Successfully', data: question };
     }
     catch (error) {
       return { error: true, msg: error.message }
     }
   }
 
-  
+
   async getPost(req) {
     try {
       console.log("🚀 ~ UserActions ~ getPost ~ req:", req.query)
-      const { username, approved, content, tags} = req.query;
+      const { username, approved, content, tags } = req.query;
       const filter = {};
       if (username) filter.username = username;
       if (approved) filter.approved = approved;
@@ -46,10 +46,10 @@ class UserActions {
       // console.log("🚀 ~ UserActions ~ getPost ~ posts:", posts )
       return { error: false, data: posts, status: 200 };
     } catch (error) {
-      return { error: true, msg: "Internal Server Error.", details: error.message , status: 500};
+      return { error: true, msg: "Internal Server Error.", details: error.message, status: 500 };
     }
   }
-  
+
 
   async addComment(reqData) {
     try {
@@ -67,17 +67,17 @@ class UserActions {
       if (!comment) {
         return { error: true, msg: 'Internal Server Error' };
       }
-      return { error: false, msg: 'comment Submitted Successfully', data: comment};
+      return { error: false, msg: 'comment Submitted Successfully', data: comment };
     }
     catch (error) {
       return { error: true, msg: error.message }
     }
   }
 
-  
+
   async getComments(req) {
     try {
-      const { username, postId} = req.query;
+      const { username, postId } = req.query;
       const filter = {};
       if (username) filter.username = username;
       if (postId) filter.postId = postId;
@@ -88,7 +88,7 @@ class UserActions {
       }
       return { error: false, data: comments, status: 200 };
     } catch (error) {
-      return { error: true, msg: "Internal Server Error.", details: error.message , status: 500};
+      return { error: true, msg: "Internal Server Error.", details: error.message, status: 500 };
     }
   }
 
@@ -97,15 +97,15 @@ class UserActions {
     try {
       const postId = reqData.postId;
       const commentExists = await Comment.exists({ postId: postId });
-        if (commentExists) {
-          const commentDeleteResult = await Comment.deleteMany({ postId: postId });
-          console.log("🚀 ~ UserActions ~ deletePost ~ Comment deleted:", commentDeleteResult.deletedCount);
-        }
+      if (commentExists) {
+        const commentDeleteResult = await Comment.deleteMany({ postId: postId });
+        console.log("🚀 ~ UserActions ~ deletePost ~ Comment deleted:", commentDeleteResult.deletedCount);
+      }
       const post = await Post.findByIdAndDelete(postId);
       if (!post) {
         return { error: true, msg: 'Internal Server Error' };
       }
-      return { error: false, msg: 'Post Deleted Successfully', data: post};
+      return { error: false, msg: 'Post Deleted Successfully', data: post };
     }
     catch (error) {
       return { error: true, msg: error.message }
@@ -119,9 +119,39 @@ class UserActions {
       if (!comment) {
         return { error: true, msg: 'Internal Server Error' };
       }
-      return { error: false, msg: 'Comment Deleted Successfully', data: comment};
-    }catch (error) {
+      return { error: false, msg: 'Comment Deleted Successfully', data: comment };
+    } catch (error) {
       return { error: true, msg: error.message }
+    }
+  }
+
+  async updatePost(reqData) {
+    console.log("🚀 ~ UserActions ~ updatePost ~ reqData:", reqData)
+    const { postId, updates } = reqData;
+
+    try {
+      if (!postId || !updates) {
+        return { error: 'Missing required fields: postId or updates', status: 400 };
+      }
+
+      if (Object.keys(updates).length === 0) {
+        return { error: 'No updates provided', status: 400 };
+      }
+
+      const updatedPost = await Post.findByIdAndUpdate(
+        {_id : postId},
+        { $set: updates },
+        { new: true, runValidators: true } 
+      );
+
+      if (!updatedPost) {
+        return { error: 'Post not found',status: 404 };
+      }
+
+      return { error: false, data: updatedPost, status: 200, msg: 'Post updated successfully' }; 
+    } catch (error) {
+      console.error('Error updating post:', error);
+      return { error: 'Internal server error' ,status: 500 };
     }
   }
 

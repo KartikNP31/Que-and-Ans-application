@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ClerkProvider } from '@clerk/clerk-react';
 import { dark} from '@clerk/themes';
+import { UsernameProvider } from './UsernameContextProvider';
 
 const PUBLISHABLE_KEY = process.env.REACT_APP_CLERK_PUBLISHABLE_KEY;
 // console.log("🚀 ~ PUBLISHABLE_KEY:", PUBLISHABLE_KEY)
@@ -21,7 +22,9 @@ root.render(
       baseTheme: dark,
       variables: { colorPrimary: "#2DD4BF" },
     }} publishableKey={PUBLISHABLE_KEY} afterSignOutUrl="/">
-      <App />
+      <UsernameProvider>
+        <App />
+      </UsernameProvider>
     </ClerkProvider>
   </React.StrictMode>
 );

@@ -43,4 +43,11 @@ router.delete('/deleteComment', async(req,res) => {
 );
 
 
+router.patch('/updatePost', async(req,res) => {
+  const response=await UserActions.updatePost(req.body);
+  	return res.send(response);
+  }
+);
+
+
 module.exports = router;

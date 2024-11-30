@@ -3,10 +3,10 @@ import Posts from './Posts';
 import { useUser } from "@clerk/clerk-react";
 
 
-const Home = () => {
+const Home = ({username}) => {
 
   return (
-    <Posts approved={true} username="UnknownUser"/>
+    <Posts approved={true} username={undefined}/>
   );
 };
 

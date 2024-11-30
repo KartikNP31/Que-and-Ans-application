@@ -25,7 +25,15 @@ class PostServices {
   
   async getPosts(reqData) {
     try {
-      const query = new URLSearchParams(reqData).toString();
+      const approved = reqData.approved;
+      const data = {
+        approved: approved,
+      }
+      const username = reqData.username;
+      if(username!==undefined){
+        data.username = username;
+      }
+      const query = new URLSearchParams(data).toString();
       // console.log("🚀 ~ PostServices ~ getPosts ~ query:", query)
       const response = await fetch(`${host}/api/user/getPosts?${query}`, {
         method: 'GET',
