@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Select from "react-select";
-import { useUser } from "@clerk/clerk-react";
 import PostServices from "../services/PostServices";
+import { toast } from 'react-hot-toast';
+import { useUsername } from "../UsernameContextProvider";
 
 // Sample predefined tags for demonstration purposes
 const availableTags = [
@@ -13,7 +14,7 @@ const availableTags = [
 ];
 
 const NewPost = () => {
-  const { user } = useUser();
+  const {username} = useUsername();
   const [question, setQuestion] = useState("");
   const [tags, setTags] = useState([]);
   const [customTag, setCustomTag] = useState("");
@@ -46,23 +47,26 @@ const NewPost = () => {
     const data = {
       question: question,
       tags: tags,
-      username: user.username,
+      username: username,
     };
 
-    console.log("🚀 ~ handlePostSubmit ~ data:", data)
+    // console.log("🚀 ~ handlePostSubmit ~ data:", data)
     try {
       const res = await PostServices.addPost(data);
       if (res.error) {
-        console.log(res.msg);
+        toast.error(res.msg);
       } else {
-        console.log(res.data);
+        toast.success(res.msg);
       }
+        console.log("🚀 ~ handlePostSubmit ~ res.msg:", res.msg)
     } catch (err) {
       console.log(err);
+      toast.error(err.message);
     }
     setQuestion("");
     setTags([]);
   };
+ 
 
   // Convert available tags into the format react-select expects
   const formattedAvailableTags = availableTags.map((tag) => ({

@@ -30,10 +30,11 @@ router.get('/getComments', async(req,res) => {
   }
 );
 
-router.delete('/deletePost', async(req,res) => {
-  const response=await UserActions.deletePost(req.body);
+router.delete('/deletePost/:id', async(req,res) => {
+  const id = req.params.id;
+  const response=await UserActions.deletePost(id);
   	return res.send(response);
-  }
+  }
 );
 
 router.delete('/deleteComment', async(req,res) => {
@@ -43,7 +44,7 @@ router.delete('/deleteComment', async(req,res) => {
 );
 
 
-router.patch('/updatePost', async(req,res) => {
+router.put('/updatePost', async(req,res) => {
   const response=await UserActions.updatePost(req.body);
   	return res.send(response);
   }

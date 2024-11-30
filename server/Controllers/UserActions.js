@@ -4,7 +4,7 @@ const Post = require('../Models/Post')
 class UserActions {
   async addPost(reqData) {
     try {
-      console.log("🚀 ~ UserActions ~ addPost ~ reqData:", reqData)
+      // console.log("🚀 ~ UserActions ~ addPost ~ reqData:", reqData)
       const content = reqData.question;
       const username = reqData.username;
       const tags = reqData.tags;
@@ -20,6 +20,7 @@ class UserActions {
       return { error: false, msg: 'question Submitted Successfully', data: question };
     }
     catch (error) {
+      console.log("🚀 ~ UserActions ~ addPost ~ error:", error)
       return { error: true, msg: error.message }
     }
   }
@@ -46,6 +47,7 @@ class UserActions {
       // console.log("🚀 ~ UserActions ~ getPost ~ posts:", posts )
       return { error: false, data: posts, status: 200 };
     } catch (error) {
+      console.log("🚀 ~ UserActions ~ getPost ~ error:", error)
       return { error: true, msg: "Internal Server Error.", details: error.message, status: 500 };
     }
   }
@@ -70,6 +72,7 @@ class UserActions {
       return { error: false, msg: 'comment Submitted Successfully', data: comment };
     }
     catch (error) {
+      console.log("🚀 ~ UserActions ~ addComment ~ error:", error)
       return { error: true, msg: error.message }
     }
   }
@@ -82,21 +85,22 @@ class UserActions {
       // if (username) filter.username = username;
       if (postId) filter.postId = postId;
       const comments = await Comment.find(filter);
-      console.log("🚀 ~ UserActions ~ getComments ~ comments:", comments)
+      // console.log("🚀 ~ UserActions ~ getComments ~ comments:", comments)
 
       if (comments.length === 0) {
         return { error: true, msg: "No comments found matching the criteria.", status: 404 };
       }
       return { error: false, data: comments, status: 200 };
     } catch (error) {
+      console.log("🚀 ~ UserActions ~ getComments ~ error:", error)
       return { error: true, msg: "Internal Server Error.", details: error.message, status: 500 };
     }
   }
 
 
-  async deletePost(reqData) {
+  async deletePost(id) {
     try {
-      const postId = reqData.postId;
+      const postId = id;
       const commentExists = await Comment.exists({ postId: postId });
       if (commentExists) {
         const commentDeleteResult = await Comment.deleteMany({ postId: postId });
@@ -109,6 +113,7 @@ class UserActions {
       return { error: false, msg: 'Post Deleted Successfully', data: post };
     }
     catch (error) {
+      console.log("🚀 ~ UserActions ~ deletePost ~ error:", error)
       return { error: true, msg: error.message }
     }
   }
@@ -122,37 +127,41 @@ class UserActions {
       }
       return { error: false, msg: 'Comment Deleted Successfully', data: comment };
     } catch (error) {
+      console.log("🚀 ~ UserActions ~ deleteComment ~ error:", error)
       return { error: true, msg: error.message }
     }
   }
 
-  async updatePost(reqData) {
-    console.log("🚀 ~ UserActions ~ updatePost ~ reqData:", reqData)
-    const { postId, updates } = reqData;
+  async updatePost(reqData) { 
+    // console.log("🚀 ~ UserActions ~ updatePost ~ reqData:", reqData);
+    const { type, postId,  updateLikeCount, updatedPost } = reqData;
 
     try {
-      if (!postId || !updates) {
-        return { error: 'Missing required fields: postId or updates', status: 400 };
+      if(!postId ){
+        return { error: true, msg: 'Internal Server Error, Try again' };
       }
 
-      if (Object.keys(updates).length === 0) {
-        return { error: 'No updates provided', status: 400 };
+      const post = await Post.findById(postId);
+
+      if (!post) {  
+        return { error: true, msg: 'Internal Server Error, Try again' };
       }
 
-      const updatedPost = await Post.findByIdAndUpdate(
-        {_id : postId},
-        { $set: updates },
-        { new: true, runValidators: true } 
-      );
-
-      if (!updatedPost) {
-        return { error: 'Post not found',status: 404 };
+      if(type === 'upVote' || type === 'downVote'){
+        post.likes += parseInt(updateLikeCount.updateLikes);
+        post.save();
+        return { error: false, msg: `Post ${type === 'upVote' ? 'Liked' : 'Disliked'}`, data: post };
       }
-
-      return { error: false, data: updatedPost, status: 200, msg: 'Post updated successfully' }; 
+      else{
+        post.content = updatedPost.content;
+        post.tags = updatedPost.tags;
+        post.save();
+        return { error: false, msg: 'Post Updated Successfully', data: post };
+      }
+      
     } catch (error) {
       console.error('Error updating post:', error);
-      return { error: 'Internal server error' ,status: 500 };
+      return { error: true, msg : error.message, status: 500 };
     }
   }
 

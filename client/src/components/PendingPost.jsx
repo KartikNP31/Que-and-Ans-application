@@ -1,15 +1,11 @@
 import React from 'react'
 import Posts from './Posts';
-import { useUsername } from '../UsernameContextProvider';
 const PendingPosts = () => {
-  const {username, userRole, setUsername} = useUsername();
-  if(userRole === "admin"){
-    setUsername(undefined);
-  }
+
   return (
     <div className='max-h-[700px] overflow-y-auto custom-scrollbar'>
       <h1 className="text-3xl font-bold text-center">Pending Posts</h1>
-      <Posts approved={false} username={username}/>
+      <Posts approved={false} />
     </div>
   );
 }

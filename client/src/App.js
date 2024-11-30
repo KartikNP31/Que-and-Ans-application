@@ -1,6 +1,8 @@
+
 import React, { useEffect, useState } from "react";
 import { Routes, Route, BrowserRouter, Navigate} from 'react-router-dom';
 import { useUser } from "@clerk/clerk-react";
+import { Toaster } from 'react-hot-toast';
 
 import Authentication from "./components/Authentication";
 import WelcomePage from "./components/WelcomePage";
@@ -12,16 +14,16 @@ import PendingPost from "./components/PendingPost";
 import NewPost from "./components/NewPost";
 import SearchPost from "./components/SearchPost";
 import { useUsername } from "./UsernameContextProvider";
+import ToastProvider from "./components/ToastProvider";
 
 function App() {
 
-  const { user } = useUser();  
+  const { user } = useUser();
   const {setUsername} = useUsername();
   const {setUserRole} = useUsername();
 
   useEffect(() => {
     if (user) {
-      // console.log("🚀 ~ useEffect ~ user:", user)
       setUsername(user.username);
       if(user.organizationMemberships.length > 0){
         setUserRole("admin");
@@ -31,8 +33,8 @@ function App() {
   
 
   return (
-    <div className="max-h-[700px] w-full block ">
-
+    <div className="h-screen w-full block ">
+      <ToastProvider/>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={< LandingPage />} replace>
@@ -55,5 +57,5 @@ function App() {
   );
 }
 
-
 export default App;
+

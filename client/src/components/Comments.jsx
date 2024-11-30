@@ -6,7 +6,7 @@ import { IoMdSend } from "react-icons/io";
 import { BiDislike, BiLike } from "react-icons/bi";
 
 const Comments = ({ postId }) => {
-  console.log("🚀 ~ Comments ~ postId:", postId)
+  // console.log("🚀 ~ Comments ~ postId:", postId)
   const [newComment, setNewComment] = useState("");
   const [comments, setComments] = useState([]);
   const { username, userRole } = useUsername();
@@ -22,8 +22,9 @@ const Comments = ({ postId }) => {
         postId: postId,
         username: username,
       };
+      // console.log("🚀 ~ handleAddComment ~ data:", data)
       const response = await CommentServices.addComment(data);
-      console.log("🚀 ~ handleAddComment ~ response:", response.data);
+      // console.log("🚀 ~ handleAddComment ~ response:", response.data);
       if (response.error) {
         console.log(response.msg);
       }
@@ -40,7 +41,7 @@ const Comments = ({ postId }) => {
         postId: postId,
       };
       const response = await CommentServices.getComments(query);
-      console.log("🚀 ~ handleGetPosts ~ response:", response.data);
+      // console.log("🚀 ~ handleGetPosts ~ response:", response.data);
       if (response.error) {
         console.log(response.msg);
       }
@@ -56,7 +57,7 @@ const Comments = ({ postId }) => {
 
   return (
     <div className="w-full transition-all duration-500 ease-in-out max-h-screen">
-      <div className="border-t mt-4 pt-4">
+      <div className="border-t mt-1 pt-4">
         <div className="flex items-center space-x-2">
           <textarea
             value={newComment}

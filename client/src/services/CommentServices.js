@@ -7,7 +7,6 @@ const host = PUBLIC_SERVER_URL
 class CommentServices {
   //fetching Top 10 reviews
   async addComment(reqData) {
-    console.log("🚀 ~ CommentServices ~ addPost ~ reqData:", reqData)
     try {
       const response = await fetch(`${host}/api/user/newComment`, {
         method: 'POST',

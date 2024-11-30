@@ -17,7 +17,6 @@ const Sidebar = () => {
   
   const handleClick = (e) => {  
     const id = e.target.id;
-    console.log("🚀 ~ handleClick ~ id:", id)
     const newMenu = menu.map((item) => {
       if(item.id === id){
         item.active = true;
@@ -27,7 +26,6 @@ const Sidebar = () => {
       return item
     });
     setMenu(newMenu);
-    console.log("🚀 ~ Sidebar ~ menu:", menu)
   }
 
 
