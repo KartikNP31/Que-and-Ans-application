@@ -36,5 +36,11 @@ router.delete('/deletePost', async(req,res) => {
   }
 );
 
+router.delete('/deleteComment', async(req,res) => {
+  const response=await UserActions.deleteComment(req.body);
+  	return res.send(response);
+  }
+);
+
 
 module.exports = router;

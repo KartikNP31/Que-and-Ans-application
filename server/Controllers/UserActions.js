@@ -112,6 +112,19 @@ class UserActions {
     }
   }
 
+  async deleteComment(reqData) {
+    try {
+      const commentId = reqData.commentId;
+      const comment = await Comment.findByIdAndDelete(commentId);
+      if (!comment) {
+        return { error: true, msg: 'Internal Server Error' };
+      }
+      return { error: false, msg: 'Comment Deleted Successfully', data: comment};
+    }catch (error) {
+      return { error: true, msg: error.message }
+    }
+  }
+
 }
 
 module.exports = new UserActions();
