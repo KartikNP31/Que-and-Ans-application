@@ -165,6 +165,28 @@ class UserActions {
     }
   }
 
+  async approvePost(reqData) {
+    const { postId, approved } = reqData;
+
+    try {
+      if(!postId ){
+        return { error: true, msg: 'Internal Server Error, Try again' };
+      }
+
+      const post = await Post.findByIdAndUpdate({ _id: postId },{$set: { approved: approved }}, { new: true });
+
+      if (!post) {  
+        return { error: true, msg: 'Internal Server Error, Try again' };
+      }
+      
+      return { error: false, msg: 'Post Approved Successfully', data: post };
+      
+    } catch (error) {
+      console.error('Error approving post:', error);
+      return { error: true, msg : error.message, status: 500 };
+    }
+  }
+
 }
 
 module.exports = new UserActions();

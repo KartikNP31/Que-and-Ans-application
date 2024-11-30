@@ -50,5 +50,11 @@ router.put('/updatePost', async(req,res) => {
   }
 );
 
+router.put('/approvePost', async(req,res) => {
+  const response=await UserActions.approvePost(req.body);
+  	return res.send(response);
+  }
+);
+
 
 module.exports = router;

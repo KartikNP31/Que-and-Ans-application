@@ -5,7 +5,9 @@ import Posts from './Posts';
 const Home = () => {
 
   return (
-    <Posts approved={true}/>
+    <div className='max-h-[740px] overflow-y-auto custom-scrollbar'>
+      <Posts approved={true}/>
+    </div>
   );
 };
 

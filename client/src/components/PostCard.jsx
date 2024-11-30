@@ -102,20 +102,24 @@ const PostCard = ({ post , handleDeleteFromArray}) => {
             </p>
           </div>
         </div>
-        <div
-          className="relative w-[3vw] hover:cursor-pointer justify-center"
-          ref={dropdownRef}
-          onClick={toggleDropdown}
-        >
-          {
-            isLiked ? (
-              <BiSolidLike className="text-green-500 w-6 h-6" onClick={()=>{handleLike(-1)}}/>
-            ) : (
-              <BiLike className="text-green-500 w-6 h-6" onClick={()=>{handleLike(1)}}/>
-            )
-          }
-          {currentPost.likes}
-        </div>
+        {
+          location.pathname !== '/Dashboard/PendingPost' && (
+            <div className="relative w-[3vw] hover:cursor-pointer justify-center"
+            ref={dropdownRef}
+            onClick={toggleDropdown}
+          >
+            {
+              isLiked ? (
+                <BiSolidLike className="text-green-500 w-6 h-6" onClick={()=>{handleLike(-1)}}/>
+              ) : (
+                <BiLike className="text-green-500 w-6 h-6" onClick={()=>{handleLike(1)}}/>
+              )
+            }
+            {currentPost.likes}
+          </div>
+          )
+        }
+       
       </div>
 
       {isModuleOpen &&  (

@@ -97,6 +97,25 @@ class PostServices {
       console.log(err);
     }
   }
+
+  async approvePost(reqData){
+    try{
+      const res = await fetch(`${host}/api/user/approvePost`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(reqData),
+      })
+      const response = await res.json();
+      return response;
+    }
+    catch (err) {
+      console.log(err);
+    }
+  }
+
+
 }
 
 module.exports = new PostServices();
