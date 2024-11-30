@@ -1,8 +1,10 @@
 import React from 'react'
 import Posts from './Posts';
+import { useUsername } from '../UsernameContextProvider';
 
-const ApprovedPosts = ({username}) => {
+const ApprovedPosts = () => {
 
+  const {username} = useUsername();
   return (
     <div>
       <h1 className="text-3xl font-bold text-center">Approved Posts</h1>

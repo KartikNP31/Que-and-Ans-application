@@ -1,7 +1,9 @@
 import React from 'react'
 import Posts from './Posts';
-const PendingPosts = ({username}) => {
-  
+import { useUsername } from '../UsernameContextProvider';
+const PendingPosts = () => {
+  const {username} = useUsername();
+
 
   return (
     <div className='max-h-[610px] overflow-y-auto custom-scrollbar'>
