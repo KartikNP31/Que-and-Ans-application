@@ -14,6 +14,14 @@ body {
   
 }
 
+.custom-scrollbar::-webkit-scrollbar {
+  display: none;  /* Hide scrollbar in Webkit browsers (Chrome, Safari) */
+}
+
+.custom-scrollbar {
+  -ms-overflow-style: none;  /* Hide scrollbar in IE/Edge */
+  scrollbar-width: none;     /* Hide scrollbar in Firefox */
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

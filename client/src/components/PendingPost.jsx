@@ -1,9 +1,17 @@
 import React from 'react'
+import Posts from './Posts';
+import { useUser } from "@clerk/clerk-react";
 
-const PendingPost = () => {
+const PendingPosts = () => {
+  const { user } = useUser();
+  const username = user ? user.username : "UnknownUser";
+
   return (
-    <div>PendingPost</div>
-  )
+    <div className='max-h-[610px] overflow-y-auto custom-scrollbar'>
+      <h1 className="text-3xl font-bold text-center">Pending Posts</h1>
+      <Posts approved={false} username={username}/>
+    </div>
+  );
 }
 
-export default PendingPost
+export default PendingPosts

@@ -1,5 +1,6 @@
 import React from "react";
-import { Routes, Route, BrowserRouter, Navigate, replace } from 'react-router-dom';
+import { Routes, Route, BrowserRouter, Navigate} from 'react-router-dom';
+import { useUser } from "@clerk/clerk-react";
 
 import Authentication from "./components/Authentication";
 import WelcomePage from "./components/WelcomePage";
@@ -12,8 +13,13 @@ import NewPost from "./components/NewPost";
 import SearchPost from "./components/SearchPost";
 
 function App() {
+
+  const { user } = useUser();
+
+  const username = user ? user.username : "UnknownUser";
+
   return (
-    <div className="h-screen w-full block">
+    <div className="h-screen w-full block ">
 
       <BrowserRouter>
         <Routes>
