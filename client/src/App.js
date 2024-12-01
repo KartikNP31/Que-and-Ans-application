@@ -12,7 +12,6 @@ import Home from "./components/Home";
 import ApprovedPost from "./components/ApprovedPost";
 import PendingPost from "./components/PendingPost";
 import NewPost from "./components/NewPost";
-import SearchPost from "./components/SearchPost";
 import { useUsername } from "./UsernameContextProvider";
 import ToastProvider from "./components/ToastProvider";
 
@@ -47,7 +46,6 @@ function App() {
               <Route path='/Dashboard/ApprovedPost' element={<ApprovedPost />} />
               <Route path='/Dashboard/PendingPost' element={<PendingPost />} />
               <Route path='/Dashboard/NewPost' element={<NewPost />} />
-              <Route path='/Dashboard/SearchPost' element={<SearchPost />} />
             </Route>
           </Route>
           <Route path='*' element={<Navigate to="/"/>}/>

@@ -1,5 +1,6 @@
 const Comment = require('../Models/Comment');
-const Post = require('../Models/Post')
+const Post = require('../Models/Post');
+const Tag = require('../Models/Tags');
 
 class UserActions {
   async addPost(reqData) {
@@ -16,6 +17,14 @@ class UserActions {
       })
       if (!question) {
         return { error: true, msg: 'Internal Server Error' };
+      }else{
+        for (const tagName of tags) {
+          await Tag.findOneAndUpdate(
+            { name: tagName },              // Search condition
+            { $inc: { count: 1 } },         // Increment count by 1
+            { upsert: true, new: true }     // Create tag if not exists
+          );
+        }
       }
       return { error: false, msg: 'question Submitted Successfully', data: question };
     }
@@ -213,6 +222,36 @@ class UserActions {
       return { error: true, msg : error.message, status: 500 };
     }
   }
+
+  
+
+  async getTags(reqData) {
+    console.log("🚀 ~ UserActions ~ getTags ~ reqData:", reqData)
+    try {
+      const { query } = reqData.query;
+      let tags = ["Finance"];
+      if (!query || query === "") {
+        tags = await Tag.find({}, { name: 1, count: 1 })
+          .sort({ count: -1 });
+          if(tags.length === 0){
+            return { error: true, msg: 'No tags found', status: 404 };
+          }
+      } else {
+        tags = await Tag.find(
+          { name: { $regex: query, $options: 'i' } },
+          { name: 1, _id: 0 }
+        )
+        if(tags.length === 0){
+          return { error: true, msg: 'No tags found', status: 404 };
+        }
+      }
+      return { error: false, data: tags, status: 200, msg: 'Top 10 relevant Tags fetched successfully' };
+    } catch (err) {
+      console.error('Error searching tags:', err);
+      return {status : 500, msg : 'Failed to search tags' , error : true, details : err.message};
+    }
+  }
+
 }
 
 module.exports = new UserActions();

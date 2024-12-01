@@ -7,7 +7,7 @@ const MenuItems = [
   {name : "New Post", element : <IoAddCircleOutline className="w-7 h-7" id="2"/>, link : "/Dashboard/NewPost", active : false, id : "2"},
   {name : "Approved Post", element : <IoCheckboxOutline className="w-7 h-7" id="3"/>, link : "/Dashboard/ApprovedPost", active : false, id : "3"},
   {name : "Pending Post", element : <IoHourglassOutline className="w-7 h-7" id="4"/>, link : "/Dashboard/PendingPost", active : false, id : "4"},
-  {name : "Search", element : <IoSearch className="w-7 h-7" id="5"/>, link : "/Dashboard/SearchPost",  active : false, id : "5"},
+  // {name : "Search", element : <IoSearch className="w-7 h-7" id="5"/>, link : "/Dashboard/SearchPost",  active : false, id : "5"},
 ]
 
 

@@ -69,10 +69,7 @@ class PostServices {
         updateLikeCount,
         postId : _id,
         updatedPost
-      };
-
-      // console.log(data);
-      
+      };      
 
       const res = await fetch(`${host}/api/user/updatePost`, {
         method: 'PUT',
@@ -111,6 +108,23 @@ class PostServices {
     try{
       const res = await fetch(`${host}/api/user/approvePost`, {
         method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(reqData),
+      })
+      const response = await res.json();
+      return response;
+    }
+    catch (err) {
+      console.log(err);
+    }
+  }
+
+  async getTags(reqData){
+    try{
+      const res = await fetch(`${host}/api/user/getTags`, {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },

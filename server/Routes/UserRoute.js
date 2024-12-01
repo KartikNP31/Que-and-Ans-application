@@ -63,5 +63,11 @@ router.put('/approvePost', async(req,res) => {
   }
 );
 
+router.post('/getTags', async(req,res) => {
+  const response=await UserActions.getTags(req.body);
+  	return res.send(response);
+  }
+);
+
 
 module.exports = router;
