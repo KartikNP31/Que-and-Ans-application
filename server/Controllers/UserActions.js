@@ -176,7 +176,7 @@ class UserActions {
   }
 
   async approvePost(reqData) {
-    console.log("🚀 ~ UserActions ~ approvePost ~ reqData:", reqData)
+    // console.log("🚀 ~ UserActions ~ approvePost ~ reqData:", reqData)
     const { postId, approved } = reqData;
 
     try {
@@ -226,7 +226,7 @@ class UserActions {
   
 
   async getTags(reqData) {
-    console.log("🚀 ~ UserActions ~ getTags ~ reqData:", reqData)
+    // console.log("🚀 ~ UserActions ~ getTags ~ reqData:", reqData)
     try {
       const { query } = reqData.query;
       let tags = ["Finance"];

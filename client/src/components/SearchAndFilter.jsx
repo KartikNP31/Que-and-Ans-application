@@ -27,12 +27,12 @@ const SearchAndFilter = ({ setContent, tags, setTags }) => {
   const handleGetTags = async () => {
     try {
       const response = await PostServices.getTags({query: ""});
-      console.log("🚀 ~ handleGetTags ~ response:", response)
+      // console.log("🚀 ~ handleGetTags ~ response:", response)
       if (response.error) {
         console.error("Error getting tags:", response.msg);
         return;
       }
-      setAvailableTags(response.data);
+      setAvailableTags(response.data.length > 0 ? response.data : demo);
     } catch (error) {
       console.error("Error getting tags:", error);
     }

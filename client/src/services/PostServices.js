@@ -104,7 +104,7 @@ class PostServices {
   }
 
   async approvePost(reqData){
-    console.log("🚀 ~ PostServices ~ approvePost ~ reqData:", reqData)
+    // console.log("🚀 ~ PostServices ~ approvePost ~ reqData:", reqData)
     try{
       const res = await fetch(`${host}/api/user/approvePost`, {
         method: 'PUT',
