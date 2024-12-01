@@ -7,8 +7,7 @@ const comment = new mongoose.Schema({
   upvote : {type : Number, default : 0},
   downvote : {type : Number, default : 0},
   createdAt: { type: Date, default: Date.now },
-});
-
+}); 
 comment.index({ postId : 1 });
 comment.index({ username : 1 });
 

@@ -30,15 +30,22 @@ router.get('/getComments', async(req,res) => {
   }
 );
 
-router.delete('/deletePost/:id', async(req,res) => {
+router.put('/likeComment', async(req,res) => {
+  const response=await UserActions.likeComment(req.body);
+  	return res.send(response);
+  }
+);
+
+router.delete('/deletePost/:id', async(req,res) => { 
   const id = req.params.id;
   const response=await UserActions.deletePost(id);
   	return res.send(response);
   }
 );
 
-router.delete('/deleteComment', async(req,res) => {
-  const response=await UserActions.deleteComment(req.body);
+router.delete('/deleteComment/:id', async(req,res) => {
+  const id = req.params.id;
+  const response=await UserActions.deleteComment(id);
   	return res.send(response);
   }
 );

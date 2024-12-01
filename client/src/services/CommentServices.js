@@ -34,6 +34,41 @@ class CommentServices {
       console.log(err);
     }
   }
+
+
+  async deleteComment(id) {
+    try {
+      const response = await fetch(`${host}/api/user/deleteComment/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      const res = await response.json();
+      return res;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async likeComment(reqData){
+    try{
+      const response = await fetch(`${host}/api/user/likeComment`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json', 
+        },
+        body: JSON.stringify(reqData),
+      })
+      const res = await response.json();
+      return res;
+    }
+    catch(err){
+      console.log(err);
+    }
+  };
+
+
 }
 
 module.exports = new CommentServices();

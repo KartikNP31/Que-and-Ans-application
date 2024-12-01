@@ -43,9 +43,10 @@ class UserActions {
       if (posts.length === 0) {
         return { error: true, msg: "No posts found matching the criteria.", status: 404 };
       }
+      const totalPosts = await Post.countDocuments();
 
       // console.log("🚀 ~ UserActions ~ getPost ~ posts:", posts )
-      return { error: false, data: posts, status: 200 };
+      return { error: false, data: {posts, totalPosts}, status: 200 };
     } catch (error) {
       console.log("🚀 ~ UserActions ~ getPost ~ error:", error)
       return { error: true, msg: "Internal Server Error.", details: error.message, status: 500 };
@@ -118,9 +119,9 @@ class UserActions {
     }
   }
 
-  async deleteComment(reqData) {
+  async deleteComment(id) {
     try {
-      const commentId = reqData.commentId;
+      const commentId = id;
       const comment = await Comment.findByIdAndDelete(commentId);
       if (!comment) {
         return { error: true, msg: 'Internal Server Error' };
@@ -166,6 +167,7 @@ class UserActions {
   }
 
   async approvePost(reqData) {
+    console.log("🚀 ~ UserActions ~ approvePost ~ reqData:", reqData)
     const { postId, approved } = reqData;
 
     try {
@@ -187,6 +189,30 @@ class UserActions {
     }
   }
 
+  async likeComment(reqData){
+    try{
+      const { type, _id } = reqData;
+      const comment = await Comment.findById(_id);
+      if(!comment){
+        return { error: true, msg: 'Internal Server Error, Try again' };
+      }
+      if(type === 'upVote'){
+        comment.upvote += 1;
+        comment.downvote -= 1 >= 0 ? comment.downvote - 1 : 0;
+      }
+      else{
+        comment.downvote += 1;
+        comment.upvote -= 1 >= 0 ? comment.upvote - 1 : 0;
+      } 
+      comment.save();
+      return { error: false, msg: 'Comment Liked Successfully', data: comment };
+
+    }
+    catch(error){
+      console.error('Error liking comment:', error);
+      return { error: true, msg : error.message, status: 500 };
+    }
+  }
 }
 
 module.exports = new UserActions();

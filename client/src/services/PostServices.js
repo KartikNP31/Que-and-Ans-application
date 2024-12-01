@@ -26,12 +26,20 @@ class PostServices {
   async getPosts(reqData) {
     try {
       const approved = reqData.approved;
+      const content = reqData.content;
+      const username = reqData.username;
+      const tags = reqData.tags;
       const data = {
         approved: approved,
       }
-      const username = reqData.username;
       if(username!==undefined){
         data.username = username;
+      }
+      if(content!=="" || content!==undefined){
+        data.content = content;
+      }
+      if(tags.length > 0){
+        data.tags = tags;
       }
       const query = new URLSearchParams(data).toString();
       const response = await fetch(`${host}/api/user/getPosts?${query}`, {
@@ -99,6 +107,7 @@ class PostServices {
   }
 
   async approvePost(reqData){
+    console.log("🚀 ~ PostServices ~ approvePost ~ reqData:", reqData)
     try{
       const res = await fetch(`${host}/api/user/approvePost`, {
         method: 'PUT',

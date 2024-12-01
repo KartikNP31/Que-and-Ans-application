@@ -41,9 +41,18 @@ const NewPost = () => {
     }
   };
 
+  const formattedAvailableTags = availableTags.map((tag) => ({
+    value: tag.value,
+    label: tag.label,
+  }));
+  
   const handlePostSubmit = async (e) => {
     e.preventDefault();
 
+    if(tags.length === 0) {
+      toast.error("Please select or add at least one tag");
+      return;
+    }
     const data = {
       question: question,
       tags: tags,
@@ -66,13 +75,7 @@ const NewPost = () => {
     setQuestion("");
     setTags([]);
   };
- 
 
-  // Convert available tags into the format react-select expects
-  const formattedAvailableTags = availableTags.map((tag) => ({
-    value: tag.value,
-    label: tag.label,
-  }));
 
   return (
     <div className="container mx-auto my-10 p-6 bg-white shadow-lg rounded-lg">

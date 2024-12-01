@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import CommentServices from "../services/CommentServices";
 import { useUsername } from "../UsernameContextProvider";
-import { AiOutlineDelete } from "react-icons/ai";
 import { IoMdSend } from "react-icons/io";
-import { BiDislike, BiLike } from "react-icons/bi";
+import toast from "react-hot-toast";
+import CommentCard from "./CommentCard";
 
 const Comments = ({ postId }) => {
   // console.log("🚀 ~ Comments ~ postId:", postId)
@@ -51,9 +51,24 @@ const Comments = ({ postId }) => {
     }
   };
 
+  const handleDeleteComment = async (id) => {
+    try {
+      const response = await CommentServices.deleteComment(id);
+      if (response.error) {
+        console.log(response.msg);
+        toast.error(response.msg);
+      }
+      setComments(comments.filter((comment) => comment._id !== id));
+      toast.success(response.msg);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+
   useEffect(() => {
     handleGetComments();
-  }, []);
+  }, [comments]);
 
   return (
     <div className="w-full transition-all duration-500 ease-in-out max-h-screen">
@@ -77,52 +92,11 @@ const Comments = ({ postId }) => {
       <div className="mt-4">
         {comments &&
           comments.map((comment, index) => (
-            <div key={index} className="flex justify-between items-start space-x-2 mb-2">
-              <div className="flex ">
-                <div className="flex items-center justify-center h-full">
-                  <p className="w-8 h-8 bg-green-400 text-white rounded-full text-center text-lg font-bold">
-                    {comment.username[0].toUpperCase()}
-                  </p>
-                </div>
-
-                <div className="px-2 flex flex-col justify-between">
-                  <div className="flex items-center space-x-2">
-                    <p className="font-semibold text-sm">{comment.username}</p>
-                    <p className="text-xs text-gray-400">
-                      {new Date(comment.createdAt).toLocaleDateString()}
-                    </p>
-                  </div>
-
-                  <div className="flex-grow">
-                    <p className="text ">{comment.content}</p>
-                  </div>
-                </div>
-              </div>
-              <div className="flex flex-row gap-2">
-                {comment.username === username || userRole === "admin" ? (
-                  <div
-                    className="flex flex-col justify-center text-gray-500 hover:text-red-500 hover:cursor-pointer"
-                    title="Delete"
-                  >
-                    <AiOutlineDelete className="w-5 h-5" />
-                  </div>
-                ) : (
-                  <></>
-                )}
-
-                <div className="flex gap-2">
-                  <div className="flex items-center">
-                    <BiLike className="text-green-500 w-5 h-5 hover:cursor-pointer" />
-                    <p className="m-0">ct</p>
-                  </div>
-
-                  <div className="flex items-center">
-                    <BiDislike className="text-green-500 w-5 h-5 hover:cursor-pointer" />
-                    <p className="m-0">ct</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <CommentCard
+              key={comment._id}
+              comment={comment}
+              handleDeleteComment={handleDeleteComment}
+            />
           ))}
       </div>
     </div>

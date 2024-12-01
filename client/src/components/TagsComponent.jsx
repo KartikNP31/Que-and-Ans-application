@@ -54,10 +54,10 @@ const TagsComponent = ({ post, handleEdit, handleDelete }) => {
       <div className=" flex items-center justify-between pt-2 ">
         <div className="flex items-center space-x-3">
           <div className="text-sm font-medium text-gray-900">
-            {post.tags.map((tag, index) => (
+            {post.tags.length > 0 && post.tags.map((tag, index) => (
               <span
                 key={index}
-                className="inline-block bg-gray-300 text-white text-sm font-medium px-2 py-0 rounded-sm mr-1 mb-1"
+                className="inline-block bg-gray-500 text-white text-sm font-medium px-2 py-0 rounded-sm mr-1 mb-1"
               >
                 {tag}
               </span>
