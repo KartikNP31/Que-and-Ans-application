@@ -32,8 +32,7 @@ const Posts = ({ approved, content, tags}) => {
       if (response.error) {
         console.log(response.msg);
       }
-      setPosts(response.data.posts);
-      setTotalPosts(response.data.totalPosts);
+      setPosts(response.data);
     } catch (error) {
       console.error(error);
     }
