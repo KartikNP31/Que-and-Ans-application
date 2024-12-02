@@ -38,7 +38,10 @@ class UserActions {
   async getPost(req) {
     try {
       // console.log("🚀 ~ UserActions ~ getPost ~ req:", req.query)
-      const { username, approved, content, tags } = req.query;
+      const { username, approved, content, tags, page, limit } = req.query;
+      // const page = req.query.page || 1;
+      // console.log("🚀 ~ UserActions ~ getPost ~ page:", page)
+      // const limit = 10;
       const filter = {};
       if (username) filter.username = username;
       if (approved) filter.approved = approved;
@@ -47,18 +50,21 @@ class UserActions {
         const tagsArray = tags.split(',');
         filter.tags = { $in: tagsArray.map(tag => new RegExp(tag, "i")) };
       }
-      const posts = await Post.find(filter);
+
+      const skip = (page - 1) * limit;
+      const posts = await Post.find(filter).skip(skip).limit(limit).sort({ likes: -1 });
+      const totalResults = await Post.countDocuments(filter);
 
       if (posts.length === 0) {
-        return { error: true, msg: "No posts found matching the criteria.", status: 404 };
+        return { error: true, msg: "No posts found matching the criteria.", totalResults:0, status: 404 };
       }
-      const totalPosts = await Post.countDocuments();
+      // const totalPosts = await Post.countDocuments();
 
       // console.log("🚀 ~ UserActions ~ getPost ~ posts:", posts )
-      return { error: false, data: {posts, totalPosts}, status: 200 };
+      return { error: false, data: posts, totalResults, start : (page-1)*limit, status: 200 };
     } catch (error) {
       console.log("🚀 ~ UserActions ~ getPost ~ error:", error)
-      return { error: true, msg: "Internal Server Error.", details: error.message, status: 500 };
+      return { error: true, msg: "Internal Server Error.", totalResults:0, details: error.message, status: 500 };
     }
   }
 
@@ -94,7 +100,7 @@ class UserActions {
       const filter = {};
       // if (username) filter.username = username;
       if (postId) filter.postId = postId;
-      const comments = await Comment.find(filter);
+      const comments = await Comment.find(filter).sort({ upvote: -1 });
       // console.log("🚀 ~ UserActions ~ getComments ~ comments:", comments)
 
       if (comments.length === 0) {

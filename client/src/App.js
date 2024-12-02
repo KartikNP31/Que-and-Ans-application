@@ -32,7 +32,7 @@ function App() {
   
 
   return (
-    <div className="h-screen w-full block ">
+    <div className="h-screen w-full">
       <ToastProvider/>
       <BrowserRouter>
         <Routes>

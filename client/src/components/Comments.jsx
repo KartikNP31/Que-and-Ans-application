@@ -71,7 +71,7 @@ const Comments = ({ postId }) => {
   }, [comments]);
 
   return (
-    <div className="w-full transition-all duration-500 ease-in-out max-h-screen">
+    <div className="w-full transition-all duration-500 ease-in-out pb-2">
       <div className="border-t mt-1 pt-4">
         <div className="flex items-center space-x-2">
           <textarea

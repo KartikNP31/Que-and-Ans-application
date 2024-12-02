@@ -44,9 +44,9 @@ const Sidebar = () => {
   return (
     <div className="mt-0 w-[110px] h-full py-2 px-1 flex flex-col items-center ">
       <div className="w-full h-full flex flex-col px-1 rounded-lg border border-gray-300">
-        {menu.map((item) => (
+        {menu.map((item, index) => (
 
-          <Link id={item.id} to={item.link} className={`w-full flex flex-col items-center px-4 py-3 rounded-lg cursor-pointer hover:bg-green-50 hover:text-green-500 ${item.active ? "bg-green-50 text-green-500" : ""}`} onClick={handleClick}>
+          <Link key={index} id={item.id} to={item.link} className={`w-full flex flex-col items-center px-4 py-3 rounded-lg cursor-pointer hover:bg-green-50 hover:text-green-500 ${item.active ? "bg-green-50 text-green-500" : ""}`} onClick={handleClick}>
             <div id={item.id}>{item.element}</div>
             
             <span id={item.id} className="text-center text-sm">{item.name}</span>

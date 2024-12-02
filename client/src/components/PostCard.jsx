@@ -36,22 +36,30 @@ const PostCard = ({ post, handleDeleteFromArray }) => {
   };
 
   const handleLike = async (num) => {
-    if (num == 1) {
+    if (num === 1) {
       const res = await PostServices.updatePost({
         type: "upVote",
         _id: post._id,
         updatedPost: null,
       });
+      if(res.error){
+        toast.error(res.msg);
+        return;
+      }
       setCurrentPost({
         ...currentPost,
         likes: currentPost.likes + 1,
       });
-    } else if (num == -1) {
+    } else if (num === -1) {
       const res = await PostServices.updatePost({
         type: "downVote",
         _id: post._id,
         updatedPost: null,
       });
+      if(res.error){
+        toast.error(res.msg);
+        return;
+      }
       setCurrentPost({
         ...currentPost,
         likes: currentPost.likes - 1,
@@ -104,7 +112,7 @@ const PostCard = ({ post, handleDeleteFromArray }) => {
     };
   }, [isOpen]);
   return (
-    <div className="flex flex-col my-5 bg-white mt-5 px-4 rounded-lg shadow-sm border border-gray-200 hover:cursor-pointer">
+    <div className="postCardContainer flex flex-col my-5 bg-white mt-5 px-4 rounded-lg shadow-sm border border-gray-200 hover:cursor-pointer">
       <div className="flex items-center justify-between py-2 ">
         <div
           className="flex items-center space-x-3 w-full"
@@ -117,7 +125,7 @@ const PostCard = ({ post, handleDeleteFromArray }) => {
             <p className="text font-semibold text-gray-900">
               {currentPost.content}
             </p>
-            <p className="text-xs flex gap-3 text-gray-500">
+            <div className="text-xs flex gap-3 text-gray-500">
               <p className="font-sm text-gray-500">
                 by-{" "}
                 <span className="text-gray-800">{currentPost.username}</span> on{" "}
@@ -134,7 +142,7 @@ const PostCard = ({ post, handleDeleteFromArray }) => {
                   <span>Pending</span>
                 </p>
               )}
-            </p>
+            </div>
           </div>
         </div>
         {(location.pathname === "/Dashboard/Home" ||

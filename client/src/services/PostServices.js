@@ -23,7 +23,7 @@ class PostServices {
     }
   }
   
-  async getPosts(reqData) {
+  async getPosts({reqData, page, limit}) {
     try {
       const approved = reqData.approved;
       const content = reqData.content;
@@ -41,6 +41,8 @@ class PostServices {
       if(tags.length > 0){
         data.tags = tags;
       }
+      data.page = page;
+      data.limit = limit;
       const query = new URLSearchParams(data).toString();
       const response = await fetch(`${host}/api/user/getPosts?${query}`, {
         method: 'GET',
@@ -65,7 +67,7 @@ class PostServices {
         updateLikeCount.updateLikes = -1;
       }
       const data = {
-        type,
+        type, 
         updateLikeCount,
         postId : _id,
         updatedPost
