@@ -26,7 +26,7 @@ class UserActions {
           );
         }
       }
-      return { error: false, msg: 'question Submitted Successfully', data: question };
+      return { error: false, msg: 'Question Submitted Successfully', data: question };
     }
     catch (error) {
       console.log("🚀 ~ UserActions ~ addPost ~ error:", error)

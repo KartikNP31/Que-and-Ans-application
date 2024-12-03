@@ -30,6 +30,7 @@ const Comments = ({ postId }) => {
       }
       setNewComment("");
       setComments([...comments, response.data]);
+
     } catch (error) {
       console.error(error);
     }
@@ -68,7 +69,7 @@ const Comments = ({ postId }) => {
 
   useEffect(() => {
     handleGetComments();
-  }, [comments]);
+  }, [comments, handleAddComment]);
 
   return (
     <div className="w-full transition-all duration-500 ease-in-out pb-2">
