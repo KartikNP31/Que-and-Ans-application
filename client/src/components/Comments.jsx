@@ -89,7 +89,7 @@ const Comments = ({ postId }) => {
         </div>
       </div>
 
-      <div className="mt-4">
+      <div className="mt-4 overflow-y-auto custom-scrollbar max-h-[300px]">
         {comments &&
           comments.map((comment, index) => (
             <CommentCard

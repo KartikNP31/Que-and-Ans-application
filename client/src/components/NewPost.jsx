@@ -6,11 +6,11 @@ import { useUsername } from "../UsernameContextProvider";
 
 // Sample predefined tags for demonstration purposes
 const demo = [
-  { value: "finance", label: "Finance" },
-  { value: "investment", label: "Investment" },
-  { value: "cryptocurrency", label: "Cryptocurrency" },
-  { value: "stocks", label: "Stocks" },
-  { value: "economy", label: "Economy" },
+  { name: "Finance" },
+  { name: "Investment" },
+  { name: "Cryptocurrency" },
+  { name: "Stocks" },
+  { name: "Economy" },
 ];
 
 const NewPost = () => {
@@ -80,9 +80,9 @@ const NewPost = () => {
   const handleGetTags = async () => {
     try {
       const response = await PostServices.getTags({query: ""});
-      // console.log("🚀 ~ handleGetTags ~ response:", response)
+      console.log("🚀 ~ handleGetTags ~ response:", response)
       if (response.error) {
-        console.error("Error getting tags:", response.msg);
+        console.log("Error getting tags:", response.msg);
         return;
       }
       setAvailableTags(response.data.length > 0 ? response.data : demo);
