@@ -68,7 +68,7 @@ const NewPost = () => {
       } else {
         toast.success(res.msg);
       }
-      console.log("🚀 ~ handlePostSubmit ~ res.msg:", res.msg);
+      // console.log("🚀 ~ handlePostSubmit ~ res.msg:", res.msg);
     } catch (err) {
       console.log(err);
       toast.error(err.message);
@@ -80,7 +80,7 @@ const NewPost = () => {
   const handleGetTags = async () => {
     try {
       const response = await PostServices.getTags({query: ""});
-      console.log("🚀 ~ handleGetTags ~ response:", response)
+      // console.log("🚀 ~ handleGetTags ~ response:", response)
       if (response.error) {
         console.log("Error getting tags:", response.msg);
         return;

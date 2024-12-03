@@ -11,7 +11,7 @@ const PostEditModal = ({ post, isOpen, onClose, onSave }) => {
     const updatedPost = {
       ...post,
       content,
-      tags: tags.split(",").map((tag) => tag.trim()), // Convert back to array
+      tags: tags.split(",").map((tag) => tag.trim()), 
     };
     onSave(updatedPost);
     const res = await PostServices.updatePost({
@@ -19,7 +19,7 @@ const PostEditModal = ({ post, isOpen, onClose, onSave }) => {
       _id: post._id,
       updatedPost: updatedPost,
     });
-    // console.log("🚀 ~ handleSave ~ res:", res)
+
 
     if (!res.error) {
       toast.success(res.msg);
@@ -28,7 +28,7 @@ const PostEditModal = ({ post, isOpen, onClose, onSave }) => {
     }
   };
 
-  if (!isOpen) return null; // Don't render modal if not open
+  if (!isOpen) return null; 
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">

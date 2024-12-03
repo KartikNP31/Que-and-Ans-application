@@ -69,8 +69,6 @@ router.post('/', async (req, res) => {
 
     console.log(`Received webhook with ID ${id} and event type: ${eventType}`);
 
-    // console.log('Webhook payload:', evt.data);
-    //// fetching user details and created its object
     const userDetails = {
       clerkId: id,
       email: email_addresses[0].email_address,
@@ -79,7 +77,6 @@ router.post('/', async (req, res) => {
       last_name: last_name,
       image_url: image_url
     }
-    // console.log("🚀 ~ router.post ~ userDetails:", userDetails)
 
     if (eventType === "user.created") {
       const response = await UserActions.createUser(userDetails);

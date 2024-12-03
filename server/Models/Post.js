@@ -9,7 +9,7 @@ const post = new mongoose.Schema({
   likes : {type : Number, default : 0}
 });
 
-// post.index({ username: 1 });
+post.index({ username: 1 });
 
 const Post = mongoose.model('Post', post);
 

@@ -1,14 +1,8 @@
 import React from "react";
 import {
-  SignedIn,
   SignedOut,
   SignIn,
-  SignInButton,
-  SignUp,
-  UserButton,
 } from "@clerk/clerk-react";
-import { Link, Navigate } from "react-router-dom";
-import { Dashboard } from "./Dashboard";
 
 const Authentication = () => {
   return (

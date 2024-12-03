@@ -6,10 +6,10 @@ import toast from "react-hot-toast";
 import CommentCard from "./CommentCard";
 
 const Comments = ({ postId }) => {
-  // console.log("🚀 ~ Comments ~ postId:", postId)
+
   const [newComment, setNewComment] = useState("");
   const [comments, setComments] = useState([]);
-  const { username, userRole } = useUsername();
+  const { username } = useUsername();
 
   const handleCommentChange = (e) => {
     setNewComment(e.target.value);
@@ -22,7 +22,6 @@ const Comments = ({ postId }) => {
         postId: postId,
         username: username,
       };
-      // console.log("🚀 ~ handleAddComment ~ data:", data)
       const response = await CommentServices.addComment(data);
       // console.log("🚀 ~ handleAddComment ~ response:", response.data);
       if (response.error) {

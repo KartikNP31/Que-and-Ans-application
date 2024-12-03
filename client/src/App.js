@@ -1,8 +1,7 @@
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Routes, Route, BrowserRouter, Navigate} from 'react-router-dom';
 import { useUser } from "@clerk/clerk-react";
-import { Toaster } from 'react-hot-toast';
 
 import Authentication from "./components/Authentication";
 import WelcomePage from "./components/WelcomePage";

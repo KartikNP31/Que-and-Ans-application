@@ -5,7 +5,7 @@ const host = PUBLIC_SERVER_URL
 
 
 class PostServices {
-  //fetching Top 10 reviews
+
   async addPost(reqData) {
     // console.log("🚀 ~ PostServices ~ addPost ~ reqData:", reqData)
     try {
@@ -23,7 +23,7 @@ class PostServices {
     }
   }
   
-  async getPosts({reqData, page, limit}) {
+  async getPosts(reqData) {
     try {
       const approved = reqData.approved;
       const content = reqData.content;
@@ -41,8 +41,7 @@ class PostServices {
       if(tags.length > 0){
         data.tags = tags;
       }
-      data.page = page;
-      data.limit = limit;
+
       const query = new URLSearchParams(data).toString();
       const response = await fetch(`${host}/api/user/getPosts?${query}`, {
         method: 'GET',
@@ -53,6 +52,7 @@ class PostServices {
       console.log(err);
     }
   }
+  
   async updatePost(reqData){
     try{
       const {type, _id, updatedPost} = reqData;
@@ -71,7 +71,7 @@ class PostServices {
         updateLikeCount,
         postId : _id,
         updatedPost
-      };      
+      };
 
       const res = await fetch(`${host}/api/user/updatePost`, {
         method: 'PUT',

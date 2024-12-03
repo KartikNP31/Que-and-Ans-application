@@ -1,11 +1,10 @@
-import { SignedIn, SignedOut, SignIn } from "@clerk/clerk-react";
+import { SignedIn, SignedOut } from "@clerk/clerk-react";
 import React from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const WelcomePage = () => {
   return (
     <div className="flex-1 flex flex-col items-center justify-center text-center bg-gray-900 text-white px-4">
-      {/* Main Heading */}
       <h1 className="text-5xl font-bold text-teal-400 mb-6">
         Welcome to FinanceQ&A
       </h1>

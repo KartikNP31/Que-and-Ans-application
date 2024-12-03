@@ -9,9 +9,6 @@ const TagsComponent = ({ post, handleEdit, handleDelete }) => {
   const { userRole } = useUsername();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
-  const [isFileRename, setFileRename] = useState(false);
-  const [isFileDelete, setFileDelete] = useState(false);
-  const [isLinkEdit, setLinkEdit] = useState(false);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -30,21 +27,6 @@ const TagsComponent = ({ post, handleEdit, handleDelete }) => {
     };
   }, [isOpen]);
 
-  const handleFileRename = () => {
-    setFileRename(!isFileRename);
-    setIsOpen(false);
-  };
-
-  const handleFileDelete = () => {
-    setFileDelete(!isFileDelete);
-    setIsOpen(false);
-  };
-
-  const handleLinkEdit = () => {
-    setLinkEdit(!isLinkEdit);
-    setIsOpen(false);
-  };
-
   useEffect(() => {
     setIsOpen(false);
   }, []);
@@ -54,14 +36,15 @@ const TagsComponent = ({ post, handleEdit, handleDelete }) => {
       <div className=" flex items-center justify-between pt-2 ">
         <div className="flex items-center space-x-3">
           <div className="text-sm font-medium text-gray-900">
-            {post.tags.length > 0 && post.tags.map((tag, index) => (
-              <span
-                key={index}
-                className="inline-block bg-gray-500 text-white text-sm font-medium px-2 py-0 rounded-sm mr-1 mb-1"
-              >
-                {tag}
-              </span>
-            ))}
+            {post.tags.length > 0 &&
+              post.tags.map((tag, index) => (
+                <span
+                  key={index}
+                  className="inline-block bg-gray-500 text-white text-sm font-medium px-2 py-0 rounded-sm mr-1 mb-1"
+                >
+                  {tag}
+                </span>
+              ))}
           </div>
         </div>
         <div
